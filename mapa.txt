@@ -1,0 +1,9 @@
+tex: road.png
+mapSize: 5 5
+tile: 10 4
+tileSize: 128 128
+0 0 0 0 0
+0 13 2 14 0
+0 1 0 1 0
+0 15 2 16 0
+0 0 0 0 0

@@ -3,16 +3,18 @@
 #include "iostream"
 
 #include "clases/auto.h"
+#include "clases/Mapa.h"
 
 int main() {
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(400, 200), "TITULO");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "TITULO");
     window.setFramerateLimit(30);
     // Load a sprite to display
     sf::Texture texture;
     if (!texture.loadFromFile("car.png"))
         return EXIT_FAILURE;
     Auto player(100, 100, texture);
+    Mapa miMapa("mapa.txt");
 
     // Start the game loop
     while (window.isOpen()) {
@@ -24,14 +26,15 @@ int main() {
                 window.close();
         }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             player.moverArriba();
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             player.moverAbajo();
         }
 
         window.clear();
+        miMapa.dibujar(window);
         player.dibujar(window);
         window.display();
     }
