@@ -4,16 +4,23 @@
 #include <SFML/Graphics.hpp>
 
 class Auto {
-    int x, y;
-    int velx, vely;
+    float acc;
+    float vel;
+    float ang;
     sf::Sprite sp;
 public:
     Auto(int x, int y, const sf::Texture &tx);
     void dibujar(sf::RenderWindow &w);
 
-    void moverArriba();
+    void acelerar();
 
-    void moverAbajo();
+    void doblar(int direc);
+
+    void simulate(sf::Sprite &enemigo);
+
+    float getAng() const;
+
+    sf::Vector2f getPos() const;
 };
 
 
