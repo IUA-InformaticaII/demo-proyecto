@@ -9,6 +9,7 @@ Auto::Auto(int x, int y, const sf::Texture &tx) {
     sp.setTexture(tx);
     sp.setPosition(x, y);
     sp.setOrigin(tx.getSize().x / 2, tx.getSize().y / 2);
+    sp.setScale(0.2, 0.2);
 }
 
 void Auto::dibujar(sf::RenderWindow &w) {
@@ -16,35 +17,45 @@ void Auto::dibujar(sf::RenderWindow &w) {
 }
 
 void Auto::acelerar() {
-    acc = 5;
+    acc = 2;
 }
 
 void Auto::doblar(int direc) {
     // ang += (direc == 1) ? 1 : -1;
     if (direc == 1)
-        ang += 2;
+        ang += M_PI / 360.0 * 40;
     else
-        ang += -2;
+        ang += -M_PI / 360.0 * 40;
 }
 
 void Auto::simulate(sf::Sprite &enemigo) {
-    float oldRot = sp.getRotation();
+    sf::Vector2f newPos, oldPos = sp.getPosition();
+    float newRot, oldRot = sp.getRotation() * M_PI / 180.0;
+    float wheelBase = 18;
 
-    sp.rotate(ang);
+    // Calculo pos de las ruedas
+    sf::Vector2f frontWheel = oldPos + wheelBase / 2 * (sf::Vector2f) {cosf(oldRot), sinf(oldRot)};
+    sf::Vector2f backWheel = oldPos - wheelBase / 2 * (sf::Vector2f) {cosf(oldRot), sinf(oldRot)};
+
+
+    acc = acc - acc / 5;
+    vel = vel + acc;
+
+    backWheel += vel * (sf::Vector2f) {cosf(oldRot), sinf(oldRot)};
+    frontWheel += vel * (sf::Vector2f) {cosf(oldRot + ang), sinf(oldRot + ang)};
     ang = 0;
 
-    sf::Vector2f newPos, oldPos = sp.getPosition();
-    // vf = v0 + a
-    acc = acc - vel / 5;
-    vel = vel + acc;
     vel = vel - vel / 5;
     if (vel < 0.1)
         vel = 0;
-    // xf = x0 + vf
-    newPos.x = sp.getPosition().x + vel * cos(sp.getRotation() / 360.0 * M_PI * 2);
-    newPos.y = sp.getPosition().y + vel * sin(sp.getRotation() / 360.0 * M_PI * 2);
 
+    newPos = (frontWheel + backWheel);
+    newPos.x /= 2;
+    newPos.y /= 2;
+    newRot = atan2f(frontWheel.y - backWheel.y, frontWheel.x - backWheel.x);
+    std::cout << newRot<< std::endl;
     sp.setPosition(newPos);
+    sp.setRotation(newRot * 180.0 / M_PI);
 
 
     if (sp.getGlobalBounds().intersects(enemigo.getGlobalBounds())) {

@@ -15,6 +15,12 @@ int main() {
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(800, 600), "TITULO");
     window.setFramerateLimit(30);
+    sf::View camera;
+
+    camera.reset({0, 0, 800, 600});
+    window.setView(camera);
+    camera.zoom(0.5);
+
     // Load a sprite to display
     sf::Texture tx_car;
     if (!tx_car.loadFromFile("car.png"))
@@ -26,7 +32,7 @@ int main() {
     if (!tx_exp.loadFromFile("explode.png"))
         return EXIT_FAILURE;
 
-    Auto player(100, 100, tx_car);
+    Auto *player;
     sf::Sprite contrincante;
     contrincante.setTexture(tx_car);
     contrincante.setPosition(400, 400);
@@ -41,7 +47,8 @@ int main() {
     ptr = mat + 3;
 
     //Mapa miMapa("mapa.txt");
-    MapaTMX miMapa("assets/maps/mapa1.tmx");
+    MapaTMX miMapa("assets/maps/mapa1.tmx", tx_car);
+    player = miMapa.getPlayer();
 
     // Start the game loop
     while (window.isOpen()) {
@@ -54,25 +61,25 @@ int main() {
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            player.acelerar();
+            player->acelerar();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             // player.moverAbajo();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            player.doblar(0);
+            player->doblar(0);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            player.doblar(1);
+            player->doblar(1);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             int idx = look_empty(bala);
             cout << idx << endl;
             if (idx >= 0)
-                bala[idx] = new Bala(player.getPos(), player.getAng(), tx_bala, tx_exp);
+                bala[idx] = new Bala(player->getPos(), player->getAng(), tx_bala, tx_exp);
         }
 //////////////////////////////////////////////////////////
-        player.simulate(contrincante);
+        player->simulate(contrincante);
 
         for (int i = 0; i < 100; ++i) {
             if (bala[i] != nullptr) {
@@ -87,8 +94,10 @@ int main() {
 
 //////////////////////////////////////////////////////////
         window.clear();
+        camera.setCenter(player->getPos());
+        window.setView(camera);
         miMapa.dibujar(window);
-        player.dibujar(window);
+        player->dibujar(window);
         window.draw(contrincante);
         for (int i = 0; i < 100; ++i) {
             if (bala[i] != nullptr)
