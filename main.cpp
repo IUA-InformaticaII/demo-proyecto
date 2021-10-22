@@ -20,7 +20,6 @@ int main() {
     camera.reset({0, 0, 800, 600});
     window.setView(camera);
     camera.zoom(0.5);
-
     // Load a sprite to display
     sf::Texture tx_car;
     if (!tx_car.loadFromFile("car.png"))
@@ -95,6 +94,7 @@ int main() {
 //////////////////////////////////////////////////////////
         window.clear();
         camera.setCenter(player->getPos());
+
         window.setView(camera);
         miMapa.dibujar(window);
         player->dibujar(window);

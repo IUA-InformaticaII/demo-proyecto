@@ -35,7 +35,7 @@
    </properties>
    <point/>
   </object>
-  <object id="6" name="player" x="552" y="1150.67">
+  <object id="6" name="player" x="556.5" y="1067.17">
    <point/>
   </object>
   <object id="7" name="enemigo" x="550.667" y="1217.33">

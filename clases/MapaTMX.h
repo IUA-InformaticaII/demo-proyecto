@@ -67,7 +67,6 @@ public:
                     if (++col == map.getTileCount().x) {
                         col = 0;
                         fila++;
-                        std::cout << std::endl;
                     }
                 }
                 //capa de Objetos
