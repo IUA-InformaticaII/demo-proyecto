@@ -6,14 +6,18 @@ Auto::Auto(int x, int y, const sf::Texture &tx) {
     acc = 0;
     ang = 0;
     vel = 0;
-    sp.setTexture(tx);
-    sp.setPosition(x, y);
-    sp.setOrigin(tx.getSize().x / 2, tx.getSize().y / 2);
-    sp.setScale(0.2, 0.2);
+    anim.setTexture(tx);
+    anim.setFila(2);
+    anim.setColumna(3);
+    anim.setFps(5);
+    anim.setPosition(x, y);
+    anim.setOrigin(tx.getSize().x / 2, tx.getSize().y / 2);
+    anim.setScale(0.2, 0.2);
 }
 
 void Auto::dibujar(sf::RenderWindow &w) {
-    w.draw(sp);
+    anim.animate();
+    w.draw(anim);
 }
 
 void Auto::acelerar() {
@@ -29,8 +33,8 @@ void Auto::doblar(int direc) {
 }
 
 void Auto::simulate(sf::Sprite &enemigo) {
-    sf::Vector2f newPos, oldPos = sp.getPosition();
-    float newRot, oldRot = sp.getRotation() * M_PI / 180.0;
+    sf::Vector2f newPos, oldPos = anim.getPosition();
+    float newRot, oldRot = anim.getRotation() * M_PI / 180.0;
     float wheelBase = 18;
 
     // Calculo pos de las ruedas
@@ -46,29 +50,32 @@ void Auto::simulate(sf::Sprite &enemigo) {
     ang = 0;
 
     vel = vel - vel / 5;
-    if (vel < 0.1)
+    if (vel < 0.1){
+        anim.setAnimation(0);
         vel = 0;
+    }else{
+        anim.setAnimation(1);
+    }
 
     newPos = (frontWheel + backWheel);
     newPos.x /= 2;
     newPos.y /= 2;
     newRot = atan2f(frontWheel.y - backWheel.y, frontWheel.x - backWheel.x);
-    std::cout << newRot<< std::endl;
-    sp.setPosition(newPos);
-    sp.setRotation(newRot * 180.0 / M_PI);
+    anim.setPosition(newPos);
+    anim.setRotation(newRot * 180.0 / M_PI);
 
 
-    if (sp.getGlobalBounds().intersects(enemigo.getGlobalBounds())) {
-        sp.setPosition(oldPos);
-        sp.setRotation(oldRot);
+    if (anim.getGlobalBounds().intersects(enemigo.getGlobalBounds())) {
+        anim.setPosition(oldPos);
+        anim.setRotation(oldRot);
         std::cout << "Choqué" << std::endl;
     }
 }
 
 float Auto::getAng() const {
-    return sp.getRotation();
+    return anim.getRotation();
 }
 
 sf::Vector2f Auto::getPos() const {
-    return sp.getPosition();
+    return anim.getPosition();
 }

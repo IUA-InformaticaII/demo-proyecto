@@ -3,6 +3,11 @@ project(testSFML)
 
 set(CMAKE_CXX_STANDARD 14)
 
+if(WIN32)
+    set(SFML_STATIC_LIBRARIES TRUE)
+    set(TMXLITE_STATIC_LIB TRUE)
+    SET(CMAKE_EXE_LINKER_FLAGS "-static")
+endif()
 
 #
 # Install TMXLITE if not installed
@@ -29,6 +34,7 @@ add_executable(testSFML
         clases/auto.cpp
         clases/Mapa.cpp
         clases/Bala.cpp
+        clases/Animator.cpp
         )
 target_link_libraries(testSFML
         sfml-graphics

@@ -1,3 +1,12 @@
+bichos: 5
+nombre edad bla bla asdf
+Waldf   5   4   2   5
+Flufi   4   1   3   5
+b
+
+b5:
+
+
 tex: road.png
 mapSize: 5 5
 tile: 10 4

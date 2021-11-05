@@ -2,12 +2,13 @@
 #define TESTSFML_AUTO_H
 
 #include <SFML/Graphics.hpp>
+#include "Animator.h"
 
 class Auto {
     float acc;
     float vel;
     float ang;
-    sf::Sprite sp;
+    Animator anim;
 public:
     Auto(int x, int y, const sf::Texture &tx);
     void dibujar(sf::RenderWindow &w);

@@ -1,7 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF39-8"?>
 <map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="128" tileheight="128" infinite="0" nextlayerid="4" nextobjectid="9">
  <tileset firstgid="1" name="Ruta" tilewidth="128" tileheight="128" tilecount="50" columns="10">
   <image source="road.png" width="1280" height="640"/>
+  <tile id="37">
+   <animation>
+    <frame tileid="38" duration="300"/>
+    <frame tileid="39" duration="300"/>
+   </animation>
+  </tile>
  </tileset>
  <layer id="1" name="Capa1" width="20" height="20">
   <data encoding="csv">
@@ -16,7 +22,7 @@
 1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,
 1,1,1,1,2,1,1,1,1,1,19,19,19,19,19,19,19,19,20,19,
 1,1,1,1,2,1,1,1,1,8,21,21,21,21,21,21,21,21,22,21,
-1,1,1,1,16,3,3,3,3,28,23,23,35,21,21,21,21,21,22,21,
+1,1,38,1,16,3,3,3,3,28,23,23,35,21,21,21,21,21,22,21,
 1,1,1,1,1,1,1,1,1,8,21,21,22,21,21,21,21,21,22,21,
 1,1,1,1,1,1,1,1,1,8,21,21,22,21,21,21,21,21,22,21,
 1,1,1,1,1,1,1,1,1,8,21,21,22,21,21,21,21,21,22,21,

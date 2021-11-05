@@ -93,7 +93,12 @@ int main() {
 
 //////////////////////////////////////////////////////////
         window.clear();
-        camera.setCenter(player->getPos());
+        sf::Vector2f cPos = player->getPos();
+        if (cPos.x < 400)
+            cPos.x = 400;
+        if (cPos.y < 300)
+            cPos.y = 300;
+        camera.setCenter(cPos);
 
         window.setView(camera);
         miMapa.dibujar(window);
